@@ -20,7 +20,7 @@ defmodule Interactor.Mixfile do
 
   defp deps do
     [
-      {:ecto, "~> 1.0 or ~> 2.0", optional: true},
+      {:ecto, "~> 2.0 or ~> 3.0", optional: true},
       {:earmark, "~> 0.2.0", only: :dev},
       {:ex_doc, "~> 0.12", only: :dev}
     ]
