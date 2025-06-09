@@ -17,12 +17,15 @@ defmodule InteractorTest do
     end
 
     def transaction(fun) when is_function(fun), do: fun.()
+
     def transaction(%Ecto.Multi{} = multi) do
-      foos = multi
-              |> Ecto.Multi.to_list
-              |> Enum.reduce(%{}, fn({key, {_, cs, _}}, m) ->
-                Map.put(m, key, insert_or_update(cs))
-              end)
+      foos =
+        multi
+        |> Ecto.Multi.to_list()
+        |> Enum.reduce(%{}, fn {key, {_, cs, _}}, m ->
+          Map.put(m, key, insert_or_update(cs))
+        end)
+
       {:ok, foos}
     end
   end
@@ -41,8 +44,9 @@ defmodule InteractorTest do
   defmodule MultiExample do
     use Interactor, repo: FakeRepo
     alias Ecto.Multi
+
     def handle_call(%{foo1: foo1, foo2: foo2}) do
-      Multi.new
+      Multi.new()
       |> Multi.insert(:foo1, ChangesetExample.handle_call(%{foo: foo1}))
       |> Multi.insert(:foo2, ChangesetExample.handle_call(%{foo: foo2}))
     end
