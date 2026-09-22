@@ -16,7 +16,9 @@ defmodule Interactor.Mixfile do
   end
 
   def application do
-    [applications: [:logger], mod: {Interactor.Application, []}]
+    # Added with elixir 1.15 due to code path issues with ecto being an optional dependency but required for testing
+    extra_applications = if Mix.env() == :test, do: [:ecto], else: []
+    [applications: [:logger] ++ extra_applications, mod: {Interactor.Application, []}]
   end
 
   defp deps do
