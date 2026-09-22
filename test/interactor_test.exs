@@ -6,7 +6,7 @@ defmodule InteractorTest do
     use Ecto.Schema
 
     schema "foos" do
-      field :foo, :string
+      field(:foo, :string)
     end
   end
 

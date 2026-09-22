@@ -5,7 +5,7 @@ defmodule Interactor.Mixfile do
     [
       app: :interactor,
       version: "0.1.0",
-      elixir: "~> 1.2",
+      elixir: "~> 1.15",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       source_url: "https://github.com/AgilionApps/interactor",
@@ -16,14 +16,17 @@ defmodule Interactor.Mixfile do
   end
 
   def application do
-    [applications: [:logger], mod: {Interactor.Application, []}]
+    # Added with elixir 1.15 due to code path issues with ecto being an optional dependency but required for testing
+    extra_applications = if Mix.env() == :test, do: [:ecto], else: []
+    [applications: [:logger] ++ extra_applications, mod: {Interactor.Application, []}]
   end
 
   defp deps do
     [
       {:ecto, "~> 3.0", optional: true},
       {:earmark, "~> 1.0", only: :dev},
-      {:ex_doc, "~> 0.12", only: :dev}
+      {:ex_doc, "~> 0.12", only: :dev},
+      {:sobelow, "~> 0.15", only: [:dev, :test], runtime: false, warn_if_outdated: true}
     ]
   end
 
