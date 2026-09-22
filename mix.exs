@@ -23,7 +23,8 @@ defmodule Interactor.Mixfile do
     [
       {:ecto, "~> 2.0 or ~> 3.0", optional: true},
       {:earmark, "~> 0.2.0", only: :dev},
-      {:ex_doc, "~> 0.12", only: :dev}
+      {:ex_doc, "~> 0.12", only: :dev},
+      {:sobelow, "~> 0.15", only: [:dev, :test], runtime: false, warn_if_outdated: true}
     ]
   end
 
