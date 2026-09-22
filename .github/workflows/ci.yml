@@ -14,7 +14,11 @@ jobs:
     if: github.event.pull_request.draft == false
 
     steps:
+<<<<<<< HEAD
       - uses: actions/checkout@v3
+=======
+      - uses: actions/checkout@v7
+>>>>>>> origin/master
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
