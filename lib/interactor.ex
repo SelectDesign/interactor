@@ -64,7 +64,7 @@ defmodule Interactor do
   `repo` options was passed to `use Interactor` the changeset or multi will be
   executed and the results returned.
   """
-  @spec call_task(module, map) :: Task.t
+  @spec call_task(module, map) :: Task.t()
   def call(interactor, context) do
     context
     |> interactor.before_call
@@ -78,7 +78,7 @@ defmodule Interactor do
 
   Useful if you want async, but want to await results.
   """
-  @spec call_task(module, map) :: Task.t
+  @spec call_task(module, map) :: Task.t()
   def call_task(interactor, map) do
     Task.Supervisor.async(TaskSupervisor, Interactor, :call, [interactor, map])
   end
@@ -120,7 +120,7 @@ defmodule Interactor do
       def before_call(c), do: c
       def after_call(r), do: r
 
-      defoverridable [before_call: 1, after_call: 1]
+      defoverridable before_call: 1, after_call: 1
     end
   end
 
