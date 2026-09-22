@@ -18,7 +18,7 @@ jobs:
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: "1.14.5" # Define the elixir version [required]
+          elixir-version: "1.15.8" # Define the elixir version [required]
           otp-version: "25.3.2.15" # Define the OTP version [required]
       - name: Restore dependencies cache
         uses: actions/cache@v4
@@ -32,6 +32,8 @@ jobs:
           path: _build
           key: ${{ runner.os }}-mix-build-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-build-
+      - name: Clean dependencies that must recompile each build
+        run: mix deps.clean ecto #clean these because ja_resource errors when it compiles and ecto does not.  Cowlib does not compile when cached so it must download every time as of Elixir 1.15
       - name: Install dependencies
         run: mix deps.get
       - name: Check format

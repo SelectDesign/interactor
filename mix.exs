@@ -5,7 +5,7 @@ defmodule Interactor.Mixfile do
     [
       app: :interactor,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       source_url: "https://github.com/AgilionApps/interactor",
