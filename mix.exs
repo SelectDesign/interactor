@@ -23,10 +23,10 @@ defmodule Interactor.Mixfile do
 
   defp deps do
     [
-      {:ecto, "~> 3.0", optional: true},
-      {:earmark, "~> 1.0", only: :dev},
-      {:ex_doc, "~> 0.12", only: :dev},
-      {:sobelow, "~> 0.15", only: [:dev, :test], runtime: false, warn_if_outdated: true}
+      # Flow is limiting this to 3.7.2
+      {:ecto, ">= 3.7.2", optional: true},
+      {:ex_doc, "~> 0.40.0", only: :dev},
+      {:sobelow, "~> 0.16", only: [:dev, :test], runtime: false, warn_if_outdated: true}
     ]
   end
 
