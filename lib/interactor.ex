@@ -1,5 +1,4 @@
 defmodule Interactor do
-  use Behaviour
   alias Interactor.TaskSupervisor
 
   @moduledoc """
@@ -97,7 +96,7 @@ defmodule Interactor do
   """
   @spec call_async(module, map) :: {:ok, pid}
   def call_async(interactor, map) do
-    if sync_tasks do
+    if sync_tasks() do
       t = Task.Supervisor.async(TaskSupervisor, Interactor, :call, [interactor, map])
       Task.await(t)
       {:ok, t.pid}
@@ -111,11 +110,11 @@ defmodule Interactor do
       @behaviour Interactor
       @doc false
       def __repo, do: unquote(opts[:repo])
-      unquote(define_callback_defaults)
+      unquote(define_callback_defaults())
     end
   end
 
-  defp define_callback_defaults do
+  defp define_callback_defaults() do
     quote do
       def before_call(c), do: c
       def after_call(r), do: r
@@ -124,7 +123,7 @@ defmodule Interactor do
     end
   end
 
-  defp sync_tasks do
+  defp sync_tasks() do
     Application.get_env(:interactor, :force_syncronous_tasks, false)
   end
 end
